@@ -1,15 +1,58 @@
 'use strict';
-const { parallel, series } = require('gulp');
+const { series, parallel } = require('gulp');
 
-const sync     = require('./tasks/Watch');
+const watch       = require('./tasks/Watch');
 const styles      = require('./tasks/Styles');
 const scripts     = require('./tasks/Scripts');
+const fonts       = require('./tasks/Fonts');
 const images      = require('./tasks/Images');
-const startWatch    = require('./tasks/Watch')
+const html        = require('./tasks/Html');
+const assets      = require('./tasks/Public');
+const unusable    = require('./tasks/Styles');
+const clean       = require('./tasks/Clean');
 
-exports.start = sync.server 
-exports.styles  = styles.styles;
-exports.scripts = scripts.scripts;
-exports.images  = images.images;
-exports.startWatch  = startWatch.startWatch;
-exports.build   = parallel(images.images, styles.styles, scripts.scripts, sync.server, startWatch.startWatch);
+exports.convertImages = 
+    series
+    (
+        images.images,
+        images.resizeSm, 
+        images.resizeMd, 
+        images.resizeLg,
+        images.resizeSm2x,
+        images.resizeMd2x,
+        images.resizeLg2x,
+        images.resizeSm3x,
+        images.resizeMd3x,
+        images.resizeLg3x, 
+        images.cachemin
+    );
+
+exports.convertFonts = 
+    series
+    (
+        fonts.toWoff2, 
+        fonts.toWoff, 
+        fonts.toEot, 
+        fonts.ttfRebase
+    );
+
+exports.dev = series(
+    series
+    (
+        this.convertFonts, 
+        this.convertImages, styles.styles, 
+        scripts.scripts,
+    ), 
+    parallel(watch.server));
+
+exports.devClear = clean.cleanSrc;
+
+exports.build = series(
+    series
+    (
+        clean.cleanPublic,
+        unusable.unusable, 
+        assets.publicFonts, 
+        assets.publicImages
+    ), 
+    parallel(assets.publicCss, assets.publicJs, html.html));
