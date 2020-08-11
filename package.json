@@ -38,6 +38,7 @@
     "gulp-concat": "^2.6.1",
     "gulp-css-url-replace": "^0.1.0",
     "gulp-csslint": "^1.0.1",
+    "gulp-fonter": "^0.3.0",
     "gulp-html-replace": "^1.6.2",
     "gulp-htmlhint": "^3.0.1",
     "gulp-htmlmin": "^5.0.1",
