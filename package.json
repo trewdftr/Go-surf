@@ -61,7 +61,6 @@
     "jquery": "^3.5.1",
     "normalize-scss": "^7.0.1",
     "normalize-stylus": "^1.0.1",
-    "normalize.less": "^1.0.0",
-    "slick-carousel": "^1.8.1"
+    "normalize.less": "^1.0.0"
   }
 }
