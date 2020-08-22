@@ -45,3 +45,8 @@ public
 
 # Git
 .git
+
+
+.min.js
+.min.css
+.map
