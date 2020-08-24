@@ -46,7 +46,8 @@ public
 # Git
 .git
 
-
-.min.js
-.min.css
+# Map
 .map
+
+# Public
+/public
